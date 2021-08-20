@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'antd';
 import { useAppSelector, useAppDispatch } from '../store';
 import { decrement, increment } from '../store/counter';
 
@@ -9,19 +10,19 @@ export const Counter = () => {
   return (
     <div>
       <div>
-        <button
+        <Button
           aria-label="Increment value"
           onClick={() => dispatch(increment())}
         >
           Increment
-        </button>
-        <span>{count}</span>
-        <button
+        </Button>
+        <span>{` ${count} `}</span>
+        <Button
           aria-label="Decrement value"
           onClick={() => dispatch(decrement())}
         >
           Decrement
-        </button>
+        </Button>
       </div>
     </div>
   );
