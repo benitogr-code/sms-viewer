@@ -12,14 +12,20 @@ export const Counter = () => {
       <div>
         <Button
           aria-label="Increment value"
-          onClick={() => dispatch(increment())}
+          onClick={() => {
+            dispatch(increment());
+            window.Main.sendMessage('Counter: increment');
+          }}
         >
           Increment
         </Button>
         <span>{` ${count} `}</span>
         <Button
           aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
+          onClick={() => {
+            dispatch(decrement())
+            window.Main.sendMessage('Counter: decrement');
+          }}
         >
           Decrement
         </Button>

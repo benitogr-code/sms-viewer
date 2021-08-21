@@ -53,7 +53,10 @@
                 {
                   "html": "./src/ui/index.html",
                   "js": "./src/renderer.ts",
-                  "name": "main_window"
+                  "name": "main_window",
+                  "preload": {
+                    "js": "./src/bridge.ts"
+                  }
                 }
               ]
             }
