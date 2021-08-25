@@ -14,7 +14,6 @@ export const Counter = () => {
           aria-label="Increment value"
           onClick={() => {
             dispatch(increment());
-            window.Main.sendMessage('Counter: increment');
           }}
         >
           Increment
@@ -24,7 +23,6 @@ export const Counter = () => {
           aria-label="Decrement value"
           onClick={() => {
             dispatch(decrement())
-            window.Main.sendMessage('Counter: decrement');
           }}
         >
           Decrement
