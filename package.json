@@ -90,10 +90,12 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.1",
+    "@rgrove/parse-xml": "^3.0.0",
     "antd": "^4.16.12",
     "electron-squirrel-startup": "^1.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-json-view": "^1.21.3",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0"
   }

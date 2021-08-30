@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import counterReducer from './counter'
+import conversationsReducer from './conversations'
 
 const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    conversations: conversationsReducer,
   },
 });
 

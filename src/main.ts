@@ -15,7 +15,6 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 let mainWindow: BrowserWindow = null;
 
 const createWindow = (): void => {
-  // Create the browser window.
   mainWindow = new BrowserWindow({
     height: 720,
     width: 1280,
@@ -25,12 +24,8 @@ const createWindow = (): void => {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
     }
   });
-
-  // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 };
 
 // See bridge.ts
