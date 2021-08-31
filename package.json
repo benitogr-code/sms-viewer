@@ -74,7 +74,6 @@
     "@electron-forge/plugin-webpack": "^6.0.0-beta.59",
     "@types/react": "^17.0.19",
     "@types/react-dom": "^17.0.9",
-    "@types/react-router-dom": "^5.1.8",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
     "@vercel/webpack-asset-relocator-loader": "^1.6.0",
@@ -94,9 +93,8 @@
     "antd": "^4.16.12",
     "electron-squirrel-startup": "^1.0.0",
     "react": "^17.0.2",
+    "react-chat-elements": "^10.16.0",
     "react-dom": "^17.0.2",
-    "react-json-view": "^1.21.3",
-    "react-redux": "^7.2.4",
-    "react-router-dom": "^5.2.0"
+    "react-redux": "^7.2.4"
   }
 }

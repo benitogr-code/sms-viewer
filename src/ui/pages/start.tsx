@@ -1,7 +1,6 @@
-import React from 'react';
-import ReactJson from 'react-json-view'
-import { Button, Col, Divider, Layout, Row } from 'antd';
-import { useAppSelector, useAppDispatch } from '../store';
+import React, { useState } from 'react';
+import { Button, Col, Empty, Layout, notification, Row, Spin } from 'antd';
+import { useAppDispatch } from '../store';
 import { setConversations } from '../store/conversations';
 import { importSmsBackup } from '../utils/importer';
 
@@ -10,48 +9,40 @@ const FILE_FILTERS = [
 ];
 
 export const StartPage = () => {
-  const conversations = useAppSelector((state) => state.conversations.data);
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(false);
 
   const onClickHandler = async () => {
     const file = await window.Main.openFile({ filters: FILE_FILTERS });
     if (!file.data)
       return;
 
+    setLoading(true);
     const importedConversations = importSmsBackup(file.data);
-    if (!importedConversations)
+    setLoading(false);
+
+    if ((importedConversations === null) || (importedConversations.length === 0)) {
+      notification.error({
+        message: 'Import error',
+        description: 'Failed to load SMS conversations from selected file.',
+      });
       return;
+    }
 
     dispatch(setConversations(importedConversations));
   };
 
-
   return (
     <Layout.Content>
-      <Row justify="center">
-        <Divider />
+      <Row justify="center" align="middle" style={{ minHeight: '100vh' }}>
         <Col>
-          <Button onClick={onClickHandler}>Import</Button>
+          <Empty description="Import conversations from SMS Backup file">
+            <Spin tip="Loading" spinning={loading}>
+              <Button onClick={onClickHandler} disabled={loading} >Import</Button>
+            </Spin>
+          </Empty>
         </Col>
       </Row>
-      <React.Fragment>
-        {
-          conversations.map((conversation, index) => {
-            return (
-              <div key={index}>
-                <Divider />
-                <ReactJson
-                  name={`${conversation.name} (${conversation.phone})`}
-                  displayDataTypes={false}
-                  collapsed={1}
-                  enableClipboard={false}
-                  src={conversation}
-                />
-              </div>
-            );
-          })
-        }
-      </React.Fragment>
     </Layout.Content>
   );
 }
