@@ -2,28 +2,27 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Layout } from 'antd';
+import { ChatPage } from './pages/chat';
 import { StartPage } from './pages/start';
-import store from './store';
+import store, { useAppSelector } from './store';
 import './styles/index.css'
+import 'react-chat-elements/dist/main.css';
 
-interface AppProps {
-  message: string;
-}
+const App = () => {
+  const conversations = useAppSelector((state) => state.conversations.data);
+  const displayChat = conversations && conversations.length > 0;
 
-class App extends React.Component<AppProps> {
-  render() {
-    return (
-      <Layout>
-        <StartPage />
-      </Layout>
-    )
-  }
-}
+  return (
+    <Layout>
+      { displayChat ? <ChatPage conversations={conversations}/> : <StartPage /> }
+    </Layout>
+  );
+};
 
 function render() {
   ReactDOM.render(
     <Provider store={store}>
-      <App message="Hello from React!" />
+      <App />
     </Provider>,
     document.getElementById('app')
   );
