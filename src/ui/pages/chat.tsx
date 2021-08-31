@@ -13,16 +13,7 @@ export const ChatPage = (props: ChatPageProps) => {
 
   return (
     <React.Fragment>
-      <Layout.Sider
-        style={{
-          overflow: 'auto',
-          height: '100vh',
-          position: 'fixed',
-          left: 0,
-        }}
-        theme="light"
-        width="25%"
-      >
+      <Layout.Sider className="chat-sider" theme="light" width="300px">
         <ChatList
           dataSource={
             props.conversations.map((conversation) => {
@@ -45,7 +36,7 @@ export const ChatPage = (props: ChatPageProps) => {
           onClick={(item: any) => setConversationId(item.id)}
         />
       </Layout.Sider>
-      <Layout.Content style={{ marginLeft: '25%' }}>
+      <Layout.Content className="chat-content">
         <MessageList
           dataSource={
             selectedConversation?.messages.map((message) => {
@@ -54,7 +45,9 @@ export const ChatPage = (props: ChatPageProps) => {
                 type: 'text',
                 text: message.body,
                 date: new Date(message.time),
-                title: message.outbound ? 'Me' : selectedConversation.name
+                title: message.outbound ? 'Me' : selectedConversation.name,
+                className: 'chat-content_message',
+                titleColor: message.outbound ? '#ff0000' : undefined,
               };
             })
           }

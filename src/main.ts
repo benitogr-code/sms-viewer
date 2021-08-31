@@ -16,8 +16,8 @@ let mainWindow: BrowserWindow = null;
 
 const createWindow = (): void => {
   mainWindow = new BrowserWindow({
-    height: 720,
-    width: 1280,
+    height: 780,
+    width: 1024,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
