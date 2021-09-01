@@ -20,6 +20,14 @@ body {
   margin-left: 300px;
 }
 
+.chat-sider_conversation-selected .rce-citem {
+  background-color: bisque;
+}
+
+.chat-sider_conversation-selected .rce-citem:hover {
+  background-color: rgb(247, 210, 166);
+}
+
 .chat-content_message .rce-mbox {
   max-width: 50vw;
 }

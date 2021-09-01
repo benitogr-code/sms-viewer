@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 const { ChatList, MessageList } = require('react-chat-elements');
-import { Layout } from 'antd';
+import { Affix, Layout, PageHeader } from 'antd';
 import { Conversation } from '../model/conversation';
 
 interface ChatPageProps {
@@ -8,8 +8,13 @@ interface ChatPageProps {
 }
 
 export const ChatPage = (props: ChatPageProps) => {
+  const bottomRef = useRef(null);
   const [conversationId, setConversationId] = useState('');
   const selectedConversation = props.conversations.find((conversation) => conversation.phone === conversationId);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView()
+  }, [selectedConversation]);
 
   return (
     <React.Fragment>
@@ -21,6 +26,7 @@ export const ChatPage = (props: ChatPageProps) => {
               const unknownContact = conversation.name.includes('Unknown');
               const title = unknownContact ? conversation.phone : conversation.name;
               const alt = unknownContact ? '?' : conversation.name.substr(0, 2).toUpperCase();
+              const selected = conversation.phone === selectedConversation?.phone;
 
               return {
                 id: conversation.phone,
@@ -30,6 +36,7 @@ export const ChatPage = (props: ChatPageProps) => {
                 subtitle: `${conversation.messages.length} messages`,
                 date: new Date(message.time),
                 unread: 0,
+                className: selected ? 'chat-sider_conversation-selected' : '',
               };
             }).sort((c1, c2) => c1.date <= c2.date ? 1 : -1)
           }
@@ -37,6 +44,11 @@ export const ChatPage = (props: ChatPageProps) => {
         />
       </Layout.Sider>
       <Layout.Content className="chat-content">
+        {selectedConversation &&
+          <Affix offsetTop={1}>
+            <PageHeader backIcon={false} title={selectedConversation.name} subTitle={selectedConversation.phone} />
+          </Affix>
+        }
         <MessageList
           dataSource={
             selectedConversation?.messages.map((message) => {
@@ -52,6 +64,7 @@ export const ChatPage = (props: ChatPageProps) => {
             })
           }
         />
+        <div ref={bottomRef} />
       </Layout.Content>
     </React.Fragment>
   );
