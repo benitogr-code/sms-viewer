@@ -2,7 +2,7 @@
   "name": "sms-viewer",
   "productName": "sms-viewer",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "SMS viewer electron app",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
