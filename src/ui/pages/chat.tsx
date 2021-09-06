@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 const { ChatList, MessageList } = require('react-chat-elements');
-import { Affix, Layout, PageHeader } from 'antd';
+import { Affix, Input, Layout, PageHeader } from 'antd';
 import { Conversation } from '../model/conversation';
 
 interface ChatPageProps {
@@ -10,6 +10,8 @@ interface ChatPageProps {
 export const ChatPage = (props: ChatPageProps) => {
   const bottomRef = useRef(null);
   const [conversationId, setConversationId] = useState('');
+  const [searchFilter, setSearchFilter] = useState('');
+
   const selectedConversation = props.conversations.find((conversation) => conversation.phone === conversationId);
 
   useEffect(() => {
@@ -19,9 +21,23 @@ export const ChatPage = (props: ChatPageProps) => {
   return (
     <React.Fragment>
       <Layout.Sider className="chat-sider" theme="light" width="300px">
+        <Affix offsetTop={1}>
+          <Input.Search
+            className="chat-sider_input-search"
+            placeholder="enter name or phone"
+            onSearch={(value: string) => setSearchFilter(value.toLowerCase())}
+            allowClear
+            enterButton />
+        </Affix>
         <ChatList
           dataSource={
-            props.conversations.map((conversation) => {
+            props.conversations
+            .filter((conversation) => {
+              if (!searchFilter) return true;
+
+              return conversation.name.toLowerCase().includes(searchFilter) || conversation.phone.includes(searchFilter)
+            })
+            .map((conversation) => {
               const message = conversation.messages[conversation.messages.length - 1];
               const unknownContact = conversation.name.includes('Unknown');
               const title = unknownContact ? conversation.phone : conversation.name;
@@ -38,7 +54,8 @@ export const ChatPage = (props: ChatPageProps) => {
                 unread: 0,
                 className: selected ? 'chat-sider_conversation-selected' : '',
               };
-            }).sort((c1, c2) => c1.date <= c2.date ? 1 : -1)
+            })
+            .sort((c1, c2) => c1.date <= c2.date ? 1 : -1)
           }
           onClick={(item: any) => setConversationId(item.id)}
         />
